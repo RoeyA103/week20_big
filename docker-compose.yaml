@@ -97,6 +97,7 @@ services:
       DATA_PATH: /tmp/data
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       KAFKA_TOPIC: metadata 
+      ELASTIC_URI: http://elasticsearch:9200
     depends_on:
       kafka:
         condition: service_healthy
@@ -108,7 +109,7 @@ services:
     volumes:
       - ./podcast:/tmp/data
     environment:
-      KAFKA_GROUP_ID: metadata-tracker
+      KAFKA_GROUP_ID: metadata2-tracker
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       KAFKA_TOPIC: metadata 
       MONGO_URI: mongodb://mongodb:27017

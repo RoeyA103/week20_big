@@ -13,8 +13,8 @@ class Config():
         self.load()
         self.validate()
 
-        print(f"""Config created - KAFKA_TOPIC:{self.KAFKA_TOPIC},\n
-                          KAFKA_BOOTSTRAP_SERVERS:{self.KAFKA_BOOTSTRAP_SERVERS},\n
+        print(f"""Config created - KAFKA_TOPIC:{self.KAFKA_TOPIC},
+                          KAFKA_BOOTSTRAP_SERVERS:{self.KAFKA_BOOTSTRAP_SERVERS},
                           KAFKA_GROUP_ID:{self.KAFKA_GROUP_ID}
                           MONGO_URI:{self.MONGO_URI}
                           MONGO_DB_NAME:{self.MONGO_DB_NAME}

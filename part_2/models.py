@@ -14,3 +14,7 @@ class MetaData(BaseModel):
         self.id = hashlib.sha256(raw_string.encode()).hexdigest()
         return self
 
+
+
+
+

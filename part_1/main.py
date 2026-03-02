@@ -2,14 +2,16 @@ from metadata_extractor import MetadataExtractor
 from config import Config
 from logger import Logger
 from producer import KafkaPublisher
-from pathlib import Path
+
 
 
 def main():
-    logger = Logger("part 1")
-    config = Config(logger=logger.get_logger())
-    metadata_extractor = MetadataExtractor(logger.get_logger())
-    producer = KafkaPublisher(logger=logger.get_logger(),
+    config = Config()
+    logger = Logger.get_logger(name="part 1",
+                    es_host=config.ELASTIC_URI,
+                    index="loggs")
+    metadata_extractor = MetadataExtractor(logger)
+    producer = KafkaPublisher(logger=logger,
                               bootstrap_servers=config.KAFKA_BOOTSTRAP_SERVERS,
                               topic=config.KAFKA_TOPIC)
 

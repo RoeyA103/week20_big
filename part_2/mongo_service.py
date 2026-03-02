@@ -30,3 +30,6 @@ class GFSSERVICE():
             return file_object_id
         except Exception as e:
             self.logger.error("GridFSStorage - " + str(e))
+
+
+    
