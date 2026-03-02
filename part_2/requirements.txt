@@ -1,0 +1,4 @@
+pydantic
+confluent_kafka
+pymongo
+elasticsearch
