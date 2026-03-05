@@ -14,7 +14,7 @@ class VoiceExtractor():
 
         text = self.r.recognize_google(audio_data=audio)
 
-        self.logger.debug("VoiceExtractor - text extracted successfuly")
+        self.logger.debug(f"VoiceExtractor - text extracted successfuly:{text}")
 
         return text
 

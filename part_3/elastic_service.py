@@ -26,7 +26,9 @@ class ElasticService():
             self.logger.error(f"ElasticService - could not update index: {e}")
 
     def get_all_doc(self):
-        docs = scan(client=self.es,query={"query": {"match_all": {}}})
+        docs = scan(client=self.es,
+                    index = self.index_name 
+                    ,query={"query": {"match_all": {}}})
         return docs
     
     def update_doc(self,id:str,doc):
