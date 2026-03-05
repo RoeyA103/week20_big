@@ -23,7 +23,7 @@ class GFSSERVICE():
             file_object_id = fs.put(
                 file_bytes,
                 filename=filename,
-                metadata={"file_id": id}
+                file_id= id
             )
 
             self.logger.debug(f"GridFSStorage - gridfs_id: {str(file_object_id)} file_id: {id}")

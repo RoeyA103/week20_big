@@ -76,18 +76,19 @@ services:
       retries: 5
       start_period: 60s
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:9.3.0
-    container_name: kibana
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - xpack.security.enabled=false
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-    restart: unless-stopped
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:9.3.0
+  #   container_name: kibana
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #     - xpack.security.enabled=false
+  #   ports:
+  #     - "5601:5601"
+  #   depends_on:
+  #     - elasticsearch
+  #   restart: unless-stopped
   part_1:
+    container_name: part_1
     build:
       context: .
       dockerfile: part_1/Dockerfile
@@ -103,6 +104,7 @@ services:
         condition: service_healthy
   
   part_2:
+    container_name: part_2
     build: 
       context: .
       dockerfile: part_2/Dockerfile
@@ -123,6 +125,23 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
+
+  part_3:
+    container_name: part_3
+    build:
+      context: .
+      dockerfile: ./part_3/Dockerfile
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_DB_NAME: test
+      ELASTIC_URI: http://elasticsearch:9200
+      ELASTIC_INDEX: podcasts
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+
 
        
 
