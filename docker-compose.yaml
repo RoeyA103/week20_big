@@ -142,7 +142,25 @@ services:
       KAFKA_GROUP_ID: uploaded-tracker
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       KAFKA_TOPIC: uploaded
+      KAFKA_TOPIC_PRODUCER: text
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
 
+
+  part_4:
+    container_name: part_4
+    build:
+      context: .
+      dockerfile: ./part_4/Dockerfile
+    environment:
+      ELASTIC_URI: http://elasticsearch:9200
+      ELASTIC_INDEX: podcasts
+      KAFKA_GROUP_ID: text2-tracker
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC: text
     depends_on:
       mongodb:
         condition: service_healthy

@@ -1,17 +1,17 @@
 from elastic_service import ElasticService
-from mongo_service import MongoService
-from voice_extrac_service import VoiceExtractor
+from word_list import Decoder
 from manager import Manager
 from logger import Logger
 from config import Config
 from consumer import KafkaConsumer
-from producer import KafkaProducer
+from statistic import Statistic
+
 
 def main():
     config = Config()
 
     logger = Logger.get_logger(
-        name="part 3",
+        name="part 4",
         es_host=config.ELASTIC_URI,
         index="loggs"
     )
@@ -23,31 +23,22 @@ def main():
         logger=logger
     )
 
-    mongo = MongoService(
-        mongo_uri=config.MONGO_URI,
-        mongo_db=config.MONGO_DB_NAME,
-        logger=logger
-    )
-
-    voice_ex = VoiceExtractor(logger=logger)
+    decoder = Decoder()
 
     consumer = KafkaConsumer(logger=logger,
                              topic=config.KAFKA_TOPIC,
                              group=config.KAFKA_GROUP_ID
                              ,bootstrap_servers=config.KAFKA_BOOTSTRAP_SERVERS)
     
-    producer = KafkaProducer(logger=logger,
-                              bootstrap_servers=config.KAFKA_BOOTSTRAP_SERVERS,
-                              topic=config.KAFKA_TOPIC_PRODUCER)
-
+    statistic = Statistic(logger=logger,
+                          hostile_list=decoder.hotile_list
+                          ,semi_hostile_list=decoder.semi_hostile_list)
 
     manager = Manager(
         elastice_service=elastic,
-        mongo_service=mongo,
-        voice_extractor=voice_ex,
+        statistic=statistic,
         logger=logger,
-        consumer=consumer,
-        producer=producer
+        consumer=consumer
     )
 
 
