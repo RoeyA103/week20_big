@@ -17,7 +17,7 @@ class ElasticService():
             mapping = {
                 "properties":{
                     "bds_percent":{"type":"float"},
-                    "is_bds":{"type":"bool"},
+                    "is_bds":{"type":"boolean"},
                     "bds_threat_level":{"type":"keyword"}
                 }
             }

@@ -76,17 +76,17 @@ services:
       retries: 5
       start_period: 60s
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:9.3.0
-  #   container_name: kibana
-  #   environment:
-  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-  #     - xpack.security.enabled=false
-  #   ports:
-  #     - "5601:5601"
-  #   depends_on:
-  #     - elasticsearch
-  #   restart: unless-stopped
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.3.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.security.enabled=false
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
   part_1:
     container_name: part_1
     build:
@@ -168,8 +168,6 @@ services:
         condition: service_healthy
       
 
-
-       
 
 volumes:
   kafka_kraft:
