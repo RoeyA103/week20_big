@@ -24,7 +24,7 @@ def main():
     finally:
         producer.flush()
 
-    logger.logger.info(f"main - sent {count} messages successfully to kafka")
+    logger.info(f"main - sent {count} messages successfully to kafka")
 
 if __name__ == "__main__":
     main()

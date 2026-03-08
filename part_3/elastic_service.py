@@ -1,5 +1,6 @@
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
+from elasticsearch import NotFoundError
 
 class ElasticService():
     def __init__(self, es_uri, index_name, logger):
@@ -31,6 +32,17 @@ class ElasticService():
                     ,query={"query": {"match_all": {}}})
         return docs
     
+    def get_doc(self,id):
+        try:
+            res = self.es.get(index=self.index_name,id=id)
+            return res['_source']
+        
+        except NotFoundError as e:
+            self.logger.debug(f"ElasticService - {e}")
+
+        except Exception as e:
+            self.logger.error(f"ElasticService - {e}")
+            
     def update_doc(self,id:str,doc):
         try:
             res = self.es.update(index=self.index_name,id=id,doc=doc,refresh=True)

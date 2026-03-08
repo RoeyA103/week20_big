@@ -1,19 +1,21 @@
 
 class EventHandler():
-    def __init__(self,k_consumer, es_client, logger,bs_model,mongo_fs):
+    def __init__(self,k_consumer, es_client, logger,bs_model,mongo_fs,producer):
         self.k_consumer = k_consumer
         self.es_client = es_client
         self.bs_model = bs_model
         self.mongo_fs = mongo_fs
+        self.producer = producer
         self.logger = logger
 
         self.logger.info("EventHandler created successfuly")
 
     def handel_event(self,event):
+        print(event)
         metadata = self.bs_model(**event)
         self.es_client.insert(doc= metadata.model_dump(),id= metadata.id)
         self.send_to_mongo(file_name=metadata.name,file_path=metadata.full_path,id = metadata.id)
-
+        self.producer.produce({"id":metadata.id})
         self.logger.debug(f"EventHandler - event: {event['name']} handel successfuly")
 
     def send_to_mongo(self,file_name:str,file_path:str,id:str):

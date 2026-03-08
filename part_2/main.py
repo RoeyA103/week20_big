@@ -5,6 +5,7 @@ from consumer import KafkaConsumer
 from mongo_service import GFSSERVICE
 from models import MetaData
 from elastic_service import ElasticsearchClient
+from producer import KafkaProducer
 
 
 def main():
@@ -21,7 +22,11 @@ def main():
     consumer = KafkaConsumer(logger=logger,
                               bootstrap_servers=config.KAFKA_BOOTSTRAP_SERVERS,
                               topic_name=config.KAFKA_TOPIC,
-                              group_id =config.KAFKA_GROUP_ID)
+                              group =config.KAFKA_GROUP_ID)
+    
+    producer = KafkaProducer(logger=logger,
+                              bootstrap_servers=config.KAFKA_BOOTSTRAP_SERVERS,
+                              topic=config.KAFKA_TOPIC_PRODUCER)
     
     es_client = ElasticsearchClient(es_uri=config.ELASTIC_URI,
                                     index_name=config.ELASTIC_INDEX,
@@ -30,7 +35,7 @@ def main():
     event_handler = EventHandler(logger=logger,k_consumer=consumer,
                                  es_client=es_client,
                                  bs_model=MetaData,
-                                 mongo_fs=mongo_fs)
+                                 mongo_fs=mongo_fs,producer=producer)
     
     event_handler.run()
 

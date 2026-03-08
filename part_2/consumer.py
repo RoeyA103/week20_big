@@ -23,7 +23,7 @@ class KafkaConsumer():
 
         consumer.subscribe([self.topic])
 
-        self.logger.debug(f"KafkaConsumer - 🟢 Consumer is running and subscribed to {self.topic} topic")  
+        self.logger.debug(f"KafkaConsumer -  Consumer is running and subscribed to {self.topic} topic")  
         
         return consumer
 

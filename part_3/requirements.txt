@@ -1,3 +1,4 @@
 pymongo
 elasticsearch
 SpeechRecognition
+confluent_kafka

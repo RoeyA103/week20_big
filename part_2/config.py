@@ -9,11 +9,13 @@ class Config():
         self.MONGO_DB_NAME = None
         self.ELASTIC_URI = None
         self.ELASTIC_INDEX = None
+        self.KAFKA_TOPIC_PRODUCER = None
 
         self.load()
         self.validate()
 
         print(f"""Config created - KAFKA_TOPIC:{self.KAFKA_TOPIC},
+                          KAFKA_TOPIC_PRODUCER: {self.KAFKA_TOPIC_PRODUCER}
                           KAFKA_BOOTSTRAP_SERVERS:{self.KAFKA_BOOTSTRAP_SERVERS},
                           KAFKA_GROUP_ID:{self.KAFKA_GROUP_ID}
                           MONGO_URI:{self.MONGO_URI}
@@ -29,7 +31,7 @@ class Config():
         self.MONGO_DB_NAME = os.getenv("MONGO_DB_NAME","test")
         self.ELASTIC_URI = os.getenv("ELASTIC_URI",'http://localhost:9200')
         self.ELASTIC_INDEX = os.getenv("ELASTIC_INDEX","podcasts")
-
+        self.KAFKA_TOPIC_PRODUCER = os.getenv("KAFKA_TOPIC_PRODUCER","uploaded")
     def validate(self):
         missing = []
 
